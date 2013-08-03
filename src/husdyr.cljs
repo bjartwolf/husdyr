@@ -121,21 +121,32 @@ In prior versions of the combinatorics library, there were two similar functions
    :else
    (multi-perm items)))
 
+(defn bebIndex [arr val] 
+  (cond (= (nth arr 0) val) 0
+        (= (nth arr 1) val) 1
+        (= (nth arr 2) val) 2
+        (= (nth arr 3) val) 3
+        (= (nth arr 4) val) 4
+))
+
 (defn solve-logic-puzzle []
   (let [people [:ukranian :norwegian :japanese :spaniard :englishman]]
 ;    (first
       (for [house (permutations people)
-            :let [[green red yellow blue ivory] house]  ; houses 
+            :let [[green red yellow blue ivory] house]  ; 1 
             :when (= (first house) :norwegian)
-            :when (= red :englishman)
+            :when (= (- (bebIndex house green) (bebIndex house ivory) 1)) ;6
+            :when (= red :englishman) ;2
             [milk tea water orangejuice coffee] (permutations people) ; cheeses
-            :when (= :ukranian tea)
-            :when (= green coffee)
+            :when (= :ukranian tea);5
+            :when (= green coffee) ;4
             :when (= (nth house 2) milk)
             [kools chesterfield oldgold parliament luckystrike] (permutations people) ; cheeses
             :when (= yellow kools)
             :when (= luckystrike orangejuice)
             [zebra snails dog horse fox] (permutations people) ; cheeses
+            :when (or (= (- (bebIndex house chesterfield) (bebIndex house fox)) 1)
+                      (= (+ (bebIndex house chesterfield) (bebIndex house fox)) 1))
 
 ; THE CONSTRAINTS IN PLAIN ENGLISH            
 ;        Of Landon and Jason, one has the 7:30pm reservation and the other loves mozzarella.
@@ -155,7 +166,7 @@ In prior versions of the combinatorics library, there were two similar functions
             ;:when (= (set [seven-thirty mozzarella]) (set [:landon :jason]))
             ;:when (= blue-cheese fortune)            
             :when (= oldgold snails)
-            :when (= :spaniard dog)
+            :when (= :spaniard dog);3
             :when (= :japanese parliament)]
             ;:when (not= muenster vogue)
             ;:when (= (count (set [fortune :landon five mascarpone vogue])) 5)
