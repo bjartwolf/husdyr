@@ -121,6 +121,7 @@ In prior versions of the combinatorics library, there were two similar functions
    :else
    (multi-perm items)))
 
+;Couldn't find .indexOf in Clojurescript
 (defn bebIndex [arr val] 
   (cond (= (nth arr 0) val) 0
         (= (nth arr 1) val) 1
@@ -129,6 +130,8 @@ In prior versions of the combinatorics library, there were two similar functions
         (= (nth arr 4) val) 4
 ))
 
+;Everything is taken from here....
+;http://programming-puzzler.blogspot.no/2013/03/logic-programming-is-overrated.html
 (defn solve-logic-puzzle []
   (let [people [:ukranian :norwegian :japanese :spaniard :englishman]]
 ;    (first
@@ -151,36 +154,9 @@ In prior versions of the combinatorics library, there were two similar functions
                       (= (+ (bebIndex house kools) (bebIndex house horse)) 1))
             :when (or (= (- (bebIndex house :norwegian) (bebIndex house blue)) 1)
                       (= (+ (bebIndex house :norwegian) (bebIndex house blue)) 1))
-; THE CONSTRAINTS IN PLAIN ENGLISH            
-;        Of Landon and Jason, one has the 7:30pm reservation and the other loves mozzarella.
-;        The blue cheese enthusiast subscribed to Fortune.
-;        The muenster enthusiast didn't subscribe to Vogue.
-;        The 5 people were the Fortune subscriber, Landon, the person with a reservation at 5:00pm, the mascarpone enthusiast, and the Vogue subscriber.
-;        The person with a reservation at 5:00pm didn't subscribe to Time.
-;        The Cosmopolitan subscriber has an earlier reservation than the mascarpone enthusiast.
-;        Bailey has a later reservation than the blue cheese enthusiast.
-;        Either the person with a reservation at 7:00pm or the person with a reservation at 7:30pm subscribed to Fortune.
-;        Landon has a later reservation than the Time subscriber.
-;        The Fortune subscriber is not Jamari.
-;        The person with a reservation at 5:00pm loves mozzarella.
-
-; THE CONSTRAINTS IN CLOJURE (in the same order)
-            ;:when (= (set [seven-thirty mozzarella]) (set [:landon :jason]))
-            ;:when (= (set [seven-thirty mozzarella]) (set [:landon :jason]))
-            ;:when (= blue-cheese fortune)            
             :when (= oldgold snails) ;7
             :when (= :spaniard dog);3
             :when (= :japanese parliament)]
-            ;:when (not= muenster vogue)
-            ;:when (= (count (set [fortune :landon five mascarpone vogue])) 5)
-            ;:when (not= five time)
-;            :when (< (.indexOf reservations cosmopolitan) (.indexOf reservations mascarpone))
-;            :when (> (.indexOf reservations :bailey) (.indexOf reservations blue-cheese))
-            ;:when (#{seven seven-thirty} fortune)
-;           :when (> (.indexOf reservations :landon) (.indexOf reservations time))
-            ;:when (not= fortune :jamari)
-            ;:when (= five mozzarella)]
-
 ; RETURN THE ANSWER        
         (array-map
           :yellow yellow :water water :kools kools :fox fox 
