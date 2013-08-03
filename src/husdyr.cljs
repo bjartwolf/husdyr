@@ -121,15 +121,21 @@ In prior versions of the combinatorics library, there were two similar functions
    :else
    (multi-perm items)))
 
-
 (defn solve-logic-puzzle []
-  (let [people [:amaya :bailey :jamari :jason :landon]]
-    (first    
-      (for [[fortune time cosmopolitan us-weekly vogue] (permutations people) ; magazines
-            [asiago blue-cheese mascarpone mozzarella muenster] (permutations people) ; cheeses
-            ; We bind the reservations in two steps, so we have a name for the overall order
-            reservations (permutations people)
-            :let [[five six seven seven-thirty eight-thirty] reservations]
+  (let [people [:ukranian :norwegian :japanese :spaniard :englishman]]
+;    (first
+      (for [house (permutations people)
+            :let [[green red yellow blue ivory] house]  ; houses 
+            :when (= (first house) :norwegian)
+            :when (= red :englishman)
+            [milk tea water orangejuice coffee] (permutations people) ; cheeses
+            :when (= :ukranian tea)
+            :when (= green coffee)
+            :when (= (nth house 2) milk)
+            [kools chesterfield oldgold parliament luckystrike] (permutations people) ; cheeses
+            :when (= yellow kools)
+            :when (= luckystrike orangejuice)
+            [zebra snails dog horse fox] (permutations people) ; cheeses
 
 ; THE CONSTRAINTS IN PLAIN ENGLISH            
 ;        Of Landon and Jason, one has the 7:30pm reservation and the other loves mozzarella.
@@ -145,27 +151,29 @@ In prior versions of the combinatorics library, there were two similar functions
 ;        The person with a reservation at 5:00pm loves mozzarella.
 
 ; THE CONSTRAINTS IN CLOJURE (in the same order)
-            :when (= (set [seven-thirty mozzarella]) (set [:landon :jason]))
-            :when (= blue-cheese fortune)            
-            :when (not= muenster vogue)
-            :when (= (count (set [fortune :landon five mascarpone vogue])) 5)
-            :when (not= five time)
+            ;:when (= (set [seven-thirty mozzarella]) (set [:landon :jason]))
+            ;:when (= (set [seven-thirty mozzarella]) (set [:landon :jason]))
+            ;:when (= blue-cheese fortune)            
+            :when (= oldgold snails)
+            :when (= :spaniard dog)
+            :when (= :japanese parliament)]
+            ;:when (not= muenster vogue)
+            ;:when (= (count (set [fortune :landon five mascarpone vogue])) 5)
+            ;:when (not= five time)
 ;            :when (< (.indexOf reservations cosmopolitan) (.indexOf reservations mascarpone))
 ;            :when (> (.indexOf reservations :bailey) (.indexOf reservations blue-cheese))
-            :when (#{seven seven-thirty} fortune)
+            ;:when (#{seven seven-thirty} fortune)
 ;           :when (> (.indexOf reservations :landon) (.indexOf reservations time))
-            :when (not= fortune :jamari)
-            :when (= five mozzarella)]
+            ;:when (not= fortune :jamari)
+            ;:when (= five mozzarella)]
 
 ; RETURN THE ANSWER        
         (array-map
-          :fortune fortune :time time :cosmopolitan cosmopolitan :us-weekly us-weekly :vogue vogue
-          :asiago asiago :blue-cheese blue-cheese :mascarpone mascarpone :mozzarella mozzarella :muenster muenster
-          :five five :six six :seven seven :seven-thirty seven-thirty :eight-thirty eight-thirty)))))
-
+          :zebra zebra :snails snails :dog dog :horse horse :fox fox :tea tea
+          ))))
 (defn -main [& args]
-  (println "BEB")
-  (println (solve-logic-puzzle))
+       (println "Beb.....")
+       (println (solve-logic-puzzle))
 )
-  
+
 (set! *main-cli-fn* -main)
