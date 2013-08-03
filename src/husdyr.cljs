@@ -133,21 +133,24 @@ In prior versions of the combinatorics library, there were two similar functions
   (let [people [:ukranian :norwegian :japanese :spaniard :englishman]]
 ;    (first
       (for [house (permutations people)
-            :let [[green red yellow blue ivory] house]  ; 1 
-            :when (= (first house) :norwegian)
+            :let [[yellow blue red ivory green] house]  ; 1 
+            :when (= (bebIndex house :norwegian) 0)
             :when (= (- (bebIndex house green) (bebIndex house ivory) 1)) ;6
             :when (= red :englishman) ;2
             [milk tea water orangejuice coffee] (permutations people) ; cheeses
             :when (= :ukranian tea);5
             :when (= green coffee) ;4
             :when (= (nth house 2) milk)
-            [kools chesterfield oldgold parliament luckystrike] (permutations people) ; cheeses
-            :when (= yellow kools)
+            [kools chesterfield oldgold parliament luckystrike] (permutations people) 
+            :when (= yellow kools) ; 8
             :when (= luckystrike orangejuice)
             [zebra snails dog horse fox] (permutations people) ; cheeses
             :when (or (= (- (bebIndex house chesterfield) (bebIndex house fox)) 1)
                       (= (+ (bebIndex house chesterfield) (bebIndex house fox)) 1))
-
+            :when (or (= (- (bebIndex house kools) (bebIndex house horse)) 1)
+                      (= (+ (bebIndex house kools) (bebIndex house horse)) 1))
+            :when (or (= (- (bebIndex house :norwegian) (bebIndex house blue)) 1)
+                      (= (+ (bebIndex house :norwegian) (bebIndex house blue)) 1))
 ; THE CONSTRAINTS IN PLAIN ENGLISH            
 ;        Of Landon and Jason, one has the 7:30pm reservation and the other loves mozzarella.
 ;        The blue cheese enthusiast subscribed to Fortune.
@@ -165,7 +168,7 @@ In prior versions of the combinatorics library, there were two similar functions
             ;:when (= (set [seven-thirty mozzarella]) (set [:landon :jason]))
             ;:when (= (set [seven-thirty mozzarella]) (set [:landon :jason]))
             ;:when (= blue-cheese fortune)            
-            :when (= oldgold snails)
+            :when (= oldgold snails) ;7
             :when (= :spaniard dog);3
             :when (= :japanese parliament)]
             ;:when (not= muenster vogue)
@@ -180,6 +183,7 @@ In prior versions of the combinatorics library, there were two similar functions
 
 ; RETURN THE ANSWER        
         (array-map
+          :yellow yellow :water water :kools kools :fox fox 
           :zebra zebra :snails snails :dog dog :horse horse :fox fox :tea tea
           ))))
 (defn -main [& args]
