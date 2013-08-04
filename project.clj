@@ -7,7 +7,7 @@
   :plugins [[lein-cljsbuild "0.3.2"]]
   :cljsbuild {:builds [{:source-paths ["src/"]
                         :compiler {:output-to "husdyr.js"
-                                   :optimizations :simple
+                                   :optimizations :advanced 
                                    :target :nodejs
-                                   :pretty-print false}}]}
+                                   :pretty-print true}}]}
 ) 

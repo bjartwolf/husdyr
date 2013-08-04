@@ -1,5 +1,6 @@
 (ns husdyr.core
   (:require [copiedCombinatorics :as comb]))
+;
 ; Naive helper function as .indexOf is not available in Clojurescript
 (defn indexOf [arr val] 
   (cond (= (nth arr 0) val) 0
@@ -42,8 +43,9 @@
           :yellow yellow :water water :kools kools :fox fox 
           :zebra zebra :snails snails :dog dog :horse horse :fox fox :tea tea
           )))))
+
 (defn -main [& args]
-       (println "Beb.....")
+       (println "Solving...")
        (println (solve-logic-puzzle))
 )
 
