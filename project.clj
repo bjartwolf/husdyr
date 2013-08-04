@@ -9,5 +9,5 @@
                         :compiler {:output-to "husdyr.js"
                                    :optimizations :advanced 
                                    :target :nodejs
-                                   :pretty-print true}}]}
+                                   :pretty-print false}}]}
 ) 

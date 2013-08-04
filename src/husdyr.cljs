@@ -1,5 +1,6 @@
 (ns husdyr.core
-  (:require [copiedCombinatorics :as comb]))
+  (:require [copiedCombinatorics :as comb]
+            [cljs.nodejs :as nodejs]))
 ;
 ; Naive helper function as .indexOf is not available in Clojurescript
 (defn indexOf [arr val] 
@@ -45,6 +46,8 @@
           )))))
 
 (defn -main [& args]
+       (def husdyr-config (nodejs/require "./husdyr.json"))
+       (println (aget husdyr-config "nations"))
        (println "Solving...")
        (println (solve-logic-puzzle))
 )
