@@ -48,7 +48,6 @@
        (def husdyr-config (nodejs/require "./husdyr.json"))
        (def nations (vec (map keyword (aget husdyr-config "nations"))))
        (println "Solving...")
-       (println (solve-logic-puzzle nations))
-)
+       (println (solve-logic-puzzle nations)))
 
 (set! *main-cli-fn* -main)
