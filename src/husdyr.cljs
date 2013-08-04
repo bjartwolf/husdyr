@@ -13,7 +13,7 @@
 ; Taken all ideas from here...
 ; http://programming-puzzler.blogspot.no/2013/03/logic-programming-is-overrated.html
 (defn solve-logic-puzzle [people]
-    (first
+;    (first
       (for [house (comb/permutations people)
             :let [[nr1 nr2 nr3 nr4 nr5] house]  ; 1 
             :when (= (people 1) nr1)
@@ -37,12 +37,12 @@
             :when (= oldgold snails) ;7
             :when (= (people 3) dog);3
             :when (= (people 2) parliament)]; 13
-
 ; RETURN THE ANSWER        
        (array-map
           :yellow yellow :water water :kools kools :fox fox 
           :zebra zebra :snails snails :dog dog :horse horse :fox fox :tea tea
-          ))))
+          )))
+;)
 
 (defn -main [& args]
        (def husdyr-config (nodejs/require "./husdyr.json"))
