@@ -19,9 +19,9 @@
             :when (= (people 1) nr1)
             [yellow blue red green ivory] (comb/permutations people)  ; 1 
             :when (= (- (indexOf house green) (indexOf house ivory)) 1) ;6
-            :when (= red :englishman) ;2
+            :when (= red (people 4)) ;2
             [milk tea water orangejuice coffee] (comb/permutations people) 
-            :when (= :ukranian tea);5
+            :when (= (people 0) tea);5
             :when (= green coffee) ;4
             :when (= (nth house 2) milk)
             [kools chesterfield oldgold parliament luckystrike] (comb/permutations people) 
@@ -32,10 +32,10 @@
                       (= (+ (indexOf house chesterfield) (indexOf house fox)) 1))
             :when (or (= (- (indexOf house kools) (indexOf house horse)) 1)
                       (= (+ (indexOf house kools) (indexOf house horse)) 1))
-            :when (or (= (- (indexOf house :norwegian) (indexOf house blue)) 1) ;15
-                      (= (+ (indexOf house :norwegian) (indexOf house blue)) 1))
+            :when (or (= (- (indexOf house (people 1)) (indexOf house blue)) 1) ;15
+                      (= (+ (indexOf house (people 1)) (indexOf house blue)) 1))
             :when (= oldgold snails) ;7
-            :when (= :spaniard dog);3
+            :when (= (people 3) dog);3
             :when (= (people 2) parliament)]; 13
 
 ; RETURN THE ANSWER        
