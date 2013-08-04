@@ -121,7 +121,7 @@ In prior versions of the combinatorics library, there were two similar functions
    :else
    (multi-perm items)))
 
-(defn bebIndex [arr val] 
+(defn indexOf [arr val] 
   (cond (= (nth arr 0) val) 0
         (= (nth arr 1) val) 1
         (= (nth arr 2) val) 2
@@ -133,9 +133,10 @@ In prior versions of the combinatorics library, there were two similar functions
   (let [people [:ukranian :norwegian :japanese :spaniard :englishman]]
 ;    (first
       (for [house (permutations people)
-            :let [[yellow blue red ivory green] house]  ; 1 
-            :when (= (bebIndex house :norwegian) 0)
-            :when (= (- (bebIndex house green) (bebIndex house ivory) 1)) ;6
+            :let [[nr1 nr2 nr3 nr4 nr5] house]  ; 1 
+            :when (= :norwegian nr1)
+            [yellow blue red green ivory] (permutations people)  ; 1 
+            :when (= (- (indexOf house green) (indexOf house ivory)) 1) ;6
             :when (= red :englishman) ;2
             [milk tea water orangejuice coffee] (permutations people) ; cheeses
             :when (= :ukranian tea);5
@@ -143,14 +144,17 @@ In prior versions of the combinatorics library, there were two similar functions
             :when (= (nth house 2) milk)
             [kools chesterfield oldgold parliament luckystrike] (permutations people) 
             :when (= yellow kools) ; 8
-            :when (= luckystrike orangejuice)
+            :when (= luckystrike orangejuice) ;13
             [zebra snails dog horse fox] (permutations people) ; cheeses
-            :when (or (= (- (bebIndex house chesterfield) (bebIndex house fox)) 1)
-                      (= (+ (bebIndex house chesterfield) (bebIndex house fox)) 1))
-            :when (or (= (- (bebIndex house kools) (bebIndex house horse)) 1)
-                      (= (+ (bebIndex house kools) (bebIndex house horse)) 1))
-            :when (or (= (- (bebIndex house :norwegian) (bebIndex house blue)) 1)
-                      (= (+ (bebIndex house :norwegian) (bebIndex house blue)) 1))
+            :when (or (= (- (indexOf house chesterfield) (indexOf house fox)) 1)
+                      (= (+ (indexOf house chesterfield) (indexOf house fox)) 1))
+            :when (or (= (- (indexOf house kools) (indexOf house horse)) 1)
+                      (= (+ (indexOf house kools) (indexOf house horse)) 1))
+            :when (or (= (- (indexOf house :norwegian) (indexOf house blue)) 1) ;15
+                      (= (+ (indexOf house :norwegian) (indexOf house blue)) 1))
+            :when (= oldgold snails) ;7
+            :when (= :spaniard dog);3
+            :when (= :japanese parliament)]; 13
 ; THE CONSTRAINTS IN PLAIN ENGLISH            
 ;        Of Landon and Jason, one has the 7:30pm reservation and the other loves mozzarella.
 ;        The blue cheese enthusiast subscribed to Fortune.
@@ -168,9 +172,6 @@ In prior versions of the combinatorics library, there were two similar functions
             ;:when (= (set [seven-thirty mozzarella]) (set [:landon :jason]))
             ;:when (= (set [seven-thirty mozzarella]) (set [:landon :jason]))
             ;:when (= blue-cheese fortune)            
-            :when (= oldgold snails) ;7
-            :when (= :spaniard dog);3
-            :when (= :japanese parliament)]
             ;:when (not= muenster vogue)
             ;:when (= (count (set [fortune :landon five mascarpone vogue])) 5)
             ;:when (not= five time)
@@ -182,10 +183,14 @@ In prior versions of the combinatorics library, there were two similar functions
             ;:when (= five mozzarella)]
 
 ; RETURN THE ANSWER        
-        (array-map
+        (do
+            (println (= (- (indexOf house green) (indexOf house ivory)) 1))
+            (println (- (indexOf house green) (indexOf house ivory)))
+            (println :green (indexOf house green) :ivory (indexOf house ivory))
+            (array-map
           :yellow yellow :water water :kools kools :fox fox 
           :zebra zebra :snails snails :dog dog :horse horse :fox fox :tea tea
-          ))))
+          )))))
 (defn -main [& args]
        (println "Beb.....")
        (println (solve-logic-puzzle))
