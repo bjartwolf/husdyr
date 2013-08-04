@@ -12,12 +12,11 @@
 ))
 ; Taken all ideas from here...
 ; http://programming-puzzler.blogspot.no/2013/03/logic-programming-is-overrated.html
-(defn solve-logic-puzzle []
-  (let [people [:ukranian :norwegian :japanese :spaniard :englishman]]
+(defn solve-logic-puzzle [people]
     (first
       (for [house (comb/permutations people)
             :let [[nr1 nr2 nr3 nr4 nr5] house]  ; 1 
-            :when (= :norwegian nr1)
+            :when (= (people 1) nr1)
             [yellow blue red green ivory] (comb/permutations people)  ; 1 
             :when (= (- (indexOf house green) (indexOf house ivory)) 1) ;6
             :when (= red :englishman) ;2
@@ -37,19 +36,19 @@
                       (= (+ (indexOf house :norwegian) (indexOf house blue)) 1))
             :when (= oldgold snails) ;7
             :when (= :spaniard dog);3
-            :when (= :japanese parliament)]; 13
+            :when (= (people 2) parliament)]; 13
 
 ; RETURN THE ANSWER        
        (array-map
           :yellow yellow :water water :kools kools :fox fox 
           :zebra zebra :snails snails :dog dog :horse horse :fox fox :tea tea
-          )))))
+          ))))
 
 (defn -main [& args]
        (def husdyr-config (nodejs/require "./husdyr.json"))
-       (println (aget husdyr-config "nations"))
+       (def nations (vec (map keyword (aget husdyr-config "nations"))))
        (println "Solving...")
-       (println (solve-logic-puzzle))
+       (println (solve-logic-puzzle nations))
 )
 
 (set! *main-cli-fn* -main)
